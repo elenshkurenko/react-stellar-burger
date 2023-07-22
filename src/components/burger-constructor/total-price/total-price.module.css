@@ -1,0 +1,12 @@
+.wrap{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: auto;
+}
+
+.price{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

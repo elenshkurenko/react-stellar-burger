@@ -1,0 +1,34 @@
+.header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-element);
+  position: relative;
+}
+.wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  width: 100%;
+}
+
+.wrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.link{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-primary-color);
+}
+
+.logo {
+  position: absolute;
+  left: calc(50% - 290px / 2);
+  top: calc(50% - 50px / 2)
+}

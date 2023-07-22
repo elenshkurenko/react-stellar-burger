@@ -1,0 +1,21 @@
+.modal{
+  position: fixed;
+  display: block;
+  width: 720px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50% );
+  background-color: var(--background);
+  z-index: 20;
+  border-radius: 40px;
+}
+
+.close{
+  position: absolute;
+  top: calc(var(--offset-base-size) * 15);
+  right: calc(var(--offset-base-size) * 10 );
+  background-color: var(--background);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
