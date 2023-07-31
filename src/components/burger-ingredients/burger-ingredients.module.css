@@ -1,0 +1,12 @@
+.block{
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-top: none;
+}
+
+.wrap{
+  overflow-y: scroll;
+}

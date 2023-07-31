@@ -1,0 +1,12 @@
+.wrap{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.price{
+  display: flex;
+  align-items: center;
+}
