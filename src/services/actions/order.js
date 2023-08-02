@@ -1,0 +1,2 @@
+export const SET_OPEN_ORDER_MODAL = 'SET_OPEN_MODAL';
+export const SET_CLOSE_ORDER_MODAL = 'SET_CLOSE_MODAL';
