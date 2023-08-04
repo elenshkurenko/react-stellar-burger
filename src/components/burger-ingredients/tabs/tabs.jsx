@@ -1,18 +1,18 @@
 import styles from './tabs.module.css';
-import React from 'react';
+import { useSelector } from 'react-redux';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 
 function Tabs(){
-  const [current, setCurrent] = React.useState('one')
+  const tab = useSelector(store => store.tabs)
   return (
     <nav className={styles.nav +' mt-5 mb-10'}>
-      <Tab value="Булки" active={current === 'one'} onClick={setCurrent}>
+      <Tab value="Булки" active={tab === 'bun'}>
         Булки
       </Tab>
-      <Tab value="Соусы" active={current === 'two'} onClick={setCurrent}>
+      <Tab value="Соусы" active={tab === 'sauce'}>
         Соусы
       </Tab>
-      <Tab value="Начинки" active={current === 'three'} onClick={setCurrent}>
+      <Tab value="Начинки" active={tab === 'main'}>
         Начинки
       </Tab>
     </nav>
