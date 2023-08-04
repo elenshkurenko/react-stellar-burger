@@ -1,12 +1,22 @@
-import { PropTypes } from 'prop-types';
 import styles from './ingredient.module.css';
 import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { SET_OPEN_INGREDIENT } from '../../../services/actions/ingredient';
+import { openIngredient } from '../../../services/actions/ingredient';
 import { useDrag } from "react-dnd";
+import { ingredientType } from '../../../utils/types';
 
 function Ingredient({ingredient}){
-  const count = useSelector(store => store.draggetIngredients.filter(item => item._id === ingredient._id).length)
+  const count = useSelector(store => {
+    if (ingredient.type === 'bun') {
+      if (store.draggetIngredients.bun && store.draggetIngredients.bun._id === ingredient._id) {
+        return 2;
+      } else {
+        return 0;
+      }
+    } else {
+      return store.draggetIngredients.ingredients.filter(item => item._id === ingredient._id).length
+    }
+  })
   const dispatch = useDispatch();
   const [, dragRef] = useDrag({
     type: 'ingredient',
@@ -14,10 +24,7 @@ function Ingredient({ingredient}){
   });
   
   const onOpen = () => {
-    dispatch({
-      type: SET_OPEN_INGREDIENT,
-      ingredient: ingredient
-    })
+    dispatch(openIngredient(ingredient))
   }
 
   return(
@@ -36,20 +43,7 @@ function Ingredient({ingredient}){
 }
 
 Ingredient.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape({
-    calories: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    fat: PropTypes.number,
-    image: PropTypes.string,
-    image_large: PropTypes.string,
-    image_mobile: PropTypes.string,
-    name: PropTypes.string,
-    price: PropTypes.number,
-    proteins: PropTypes.number,
-    type: PropTypes.string,
-    __v: PropTypes.number,
-    _id: PropTypes.string
-  }))
+  ingredient: ingredientType
 };
 
 export default Ingredient;

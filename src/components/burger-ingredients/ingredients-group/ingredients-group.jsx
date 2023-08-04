@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types'; 
 import {  useSelector } from 'react-redux';
 import styles from './ingredients-group.module.css';
 import Ingredient from '../ingredient/ingredient';
+import { ingredientType } from '../../../utils/types';
 
 function IngredientsGroup({item}) {
   const ingredients = useSelector(store => store.ingredients)
@@ -23,20 +23,7 @@ function IngredientsGroup({item}) {
 }
 
 IngredientsGroup.propTypes = {
-  item: PropTypes.arrayOf(PropTypes.shape({
-    calories: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    fat: PropTypes.number,
-    image: PropTypes.string,
-    image_large: PropTypes.string,
-    image_mobile: PropTypes.string,
-    name: PropTypes.string,
-    price: PropTypes.number,
-    proteins: PropTypes.number,
-    type: PropTypes.string,
-    __v: PropTypes.number,
-    _id: PropTypes.string
-  }))
-}
+  item: ingredientType
+};
 
 export default IngredientsGroup;

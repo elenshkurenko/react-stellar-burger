@@ -1,10 +1,11 @@
-import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux';
 import {useRef} from 'react'
 import styles from './constructor-change-element.module.css';
 import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import { REMOVE_DRAGGED_INGREDIENTS, MOVE_DRAGGED_INGREDIENTS } from '../../../services/actions/dragged-ingredients';
+import { removeIngredient, moveDraggedIngredient } from '../../../services/actions/dragged-ingredients';
 import { useDrag, useDrop } from 'react-dnd';
+import PropTypes from 'prop-types';
+import { ingredientType } from '../../../utils/types';
 
 function ConstructorChangeElement({ingredient, index}){
   const dispatch = useDispatch()
@@ -13,10 +14,7 @@ function ConstructorChangeElement({ingredient, index}){
   const previewRef = useRef(null)
 
   const onRemove = () => {
-    dispatch({
-      type: REMOVE_DRAGGED_INGREDIENTS,
-      uuid: ingredient.uuid
-    })
+    dispatch(removeIngredient(ingredient.uuid))
   }
 
   const [{ handlerId }, drop] = useDrop({
@@ -47,11 +45,7 @@ function ConstructorChangeElement({ingredient, index}){
         return
       }
       if (dragIndex !== undefined && hoverIndex !== undefined) {
-        dispatch({
-          type: MOVE_DRAGGED_INGREDIENTS,
-          dragIndex,
-          hoverIndex
-        })
+        dispatch(moveDraggedIngredient({ dragIndex, hoverIndex}))
       }
       item.index = hoverIndex
     },
@@ -85,20 +79,7 @@ function ConstructorChangeElement({ingredient, index}){
 }
 
 ConstructorChangeElement.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape({
-    calories: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    fat: PropTypes.number,
-    image: PropTypes.string,
-    image_large: PropTypes.string,
-    image_mobile: PropTypes.string,
-    name: PropTypes.string,
-    price: PropTypes.number,
-    proteins: PropTypes.number,
-    type: PropTypes.string,
-    __v: PropTypes.number,
-    _id: PropTypes.string
-  })),
+  ingredients: PropTypes.arrayOf(ingredientType),
   index: PropTypes.number
 }
 

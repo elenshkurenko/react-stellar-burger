@@ -5,8 +5,8 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../modal/ingredient-details/ingredient-details';
 import {useRef} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { SET_CLOSE_INGREDIENT } from '../../services/actions/ingredient';
-import { SET_ACTIVE_TAB } from '../../services/actions/tabs';
+import { closeIngredient } from '../../services/actions/ingredient';
+import { setActiveTab } from '../../services/actions/tabs';
 
 function BurgerIngredients() {
   const position = useRef({})
@@ -28,9 +28,7 @@ function BurgerIngredients() {
   const ingredient = useSelector(store => store.ingredient);
   const dispatch = useDispatch();
   const closeModal = () => {
-    dispatch({
-      type: SET_CLOSE_INGREDIENT
-    })
+    dispatch(closeIngredient())
   }
 
   const onScroll = (event) => {
@@ -39,10 +37,7 @@ function BurgerIngredients() {
       const offsetTop = position.current[item.type]
       return offsetTop <= scrollTop
     })
-    dispatch({
-      type: SET_ACTIVE_TAB,
-      value: currentTab.type
-    })
+    dispatch(setActiveTab(currentTab.type))
   }
 
   return(

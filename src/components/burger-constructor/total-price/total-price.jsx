@@ -2,53 +2,30 @@ import styles from './total-price.module.css';
 import {CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../../modal/modal';
 import OrderDetailes from '../../modal/order-details/order-details';
-import { SET_OPEN_ORDER_MODAL, SET_CLOSE_ORDER_MODAL } from '../../../services/actions/order';
+import { createOrder, closeOrderModal } from '../../../services/actions/order';
 import { useDispatch, useSelector } from 'react-redux';
 
 function TotalPrice() {
   const dispatch = useDispatch();
-  const ingredients = useSelector(store => store.draggetIngredients.map(item => item._id))
+  const bun = useSelector(store => store.draggetIngredients.bun)
+  const ingredients = useSelector(store => store.draggetIngredients.ingredients.map(item => item._id))
   const order = useSelector(store => store.order)
-  const prices = useSelector(store => store.draggetIngredients.map(item => item.price))
+  const bunPrice = useSelector(store => store.draggetIngredients.bun ? store.draggetIngredients.bun.price : 0)
+  const ingredientsPrices = useSelector(store => store.draggetIngredients.ingredients.map(item => item.price))
 
 
-  const sum = prices.reduce(function(accumulator, currentValue){
+  const sum = ingredientsPrices.reduce(function(accumulator, currentValue){
     return accumulator + currentValue;
-  }, 0);
+  }, bunPrice * 2);
 
   const onOpen = () => {
-    const api = 'https://norma.nomoreparties.space/api/orders'
-    fetch(api, {
-      method: 'POST',
-      body: JSON.stringify({
-        ingredients
-      }),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(res => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`);
-    })
-    .then((res) => {
-      dispatch({
-        type: SET_OPEN_ORDER_MODAL,
-        id: res.order.number
-      })
-    })
-    .catch((error) => {
-      console.error(error);
-    })
+    if (bun && ingredients.length > 0) {
+      dispatch(createOrder([bun._id, bun._id, ...ingredients]))
+    }
   }
 
   const onClose = () => {
-    dispatch({
-      type: SET_CLOSE_ORDER_MODAL
-    })
+    dispatch(closeOrderModal())
   }
 
   return(

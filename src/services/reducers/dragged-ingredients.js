@@ -1,30 +1,40 @@
 import update from 'immutability-helper'
 import { SET_DRAGGED_INGREDIENTS, REMOVE_DRAGGED_INGREDIENTS, MOVE_DRAGGED_INGREDIENTS } from '../actions/dragged-ingredients';
 
-const initialState = []
+const initialState = {
+  bun: null,
+  ingredients: []
+}
 
 export const draggetIngredientsReducer = (state = initialState, action) => {
   switch(action.type){
     case SET_DRAGGED_INGREDIENTS: {
       if (action.data.type === 'bun') {
-        return [
-          ...state.filter(item => item.type !== 'bun'),
-          action.data,
-          action.data
-        ]
+        return {
+          ...state,
+          bun: action.data
+        }
       } else {
-        return [...state, action.data]
+        return {
+          ...state,
+          ingredients: [...state.ingredients, action.data]
+        }
       }
     }
     case REMOVE_DRAGGED_INGREDIENTS: {
-      return state.filter((item) => action.uuid !== item.uuid)
+      return {
+        ...state,
+        ingredients: state.ingredients.filter((item) => action.uuid !== item.uuid)
+      }
     }
     case MOVE_DRAGGED_INGREDIENTS: {
       return update(state, {
-        $splice: [
-          [action.dragIndex, 1],
-          [action.hoverIndex, 0, state[action.dragIndex]],
-        ],
+        ingredients: {
+          $splice: [
+            [action.dragIndex, 1],
+            [action.hoverIndex, 0, state.ingredients[action.dragIndex]],
+          ],
+        }
       })
     }
     default:
